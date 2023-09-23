@@ -14,6 +14,7 @@ def create_connection():
     try:
         # conn = psycopg2.connect(host='localhost', database='test', user='postgres', password='567234')
         database_path = Path("db")
+        database_path.mkdir(exist_ok=True, parents=True)
         conn = connect(database_path.joinpath("hw06.sqlite"))
         yield conn
         conn.close()

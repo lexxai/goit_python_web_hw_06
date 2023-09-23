@@ -160,4 +160,5 @@ cython_debug/
 #.idea/
 poetry.lock
 logs/
-db/
+db/*.sqlite
+
