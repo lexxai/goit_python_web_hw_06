@@ -1,51 +1,19 @@
 import logging
 from pathlib import Path
+from faker import Faker
 
 try:
-    from connection import create_connection
-    from create_db import executescript
+    from create_tables import create_tables
+    from insert_data import insert_data
 except ImportError:
-    from hw_06.connection import create_connection
-    from hw_06.create_db import executescript
-
-
-
-
-def create_tables():
-    logger.info("create_tables")
-    tables_path = Path("sql")
-    tables = [
-        "create_table_groups.sql",
-        "create_table_students.sql",
-        "create_table_disciplies.sql",
-        "create_table_teachers.sql",
-        "create_table_grade.sql"
-    ]
-    try:
-        with create_connection() as conn:
-            if conn is not None:
-                for table in tables:
-                    try:
-                        sql_script = tables_path.joinpath(table).read_text(encoding='utf-8')
-                        # logger.info(f"{sql_script=}")
-                    except OSError as e:
-                        logger.error(f"ERROR OPEN SQL : {e}")
-                        raise RuntimeError
-                    else:
-                        if sql_script:
-                            if not executescript(conn, sql_script):
-                                logger.error(f'Error: can\'t execute sql script: {table}')
-                                raise RuntimeError
-                logger.info(f"All {len(tables)} tables created")
-            else:
-                logger.error('Error: can\'t create the database connection')
-    except RuntimeError as err:
-        logger.error(err)
+    from hw_06.create_tables import create_tables
+    from hw_06.insert_data import insert_data
 
 
 
 def main():
-    create_tables()
+    if create_tables():
+        insert_data()
 
     
 
@@ -53,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
     FORMAT = "%(asctime)s  %(message)s"
-    logging.basicConfig(format=FORMAT, level=logging.INFO)
+    logging.basicConfig(format=FORMAT, level=logging.DEBUG)
     main()
 
 
