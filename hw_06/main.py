@@ -18,7 +18,8 @@ def create_tables():
         "create_table_groups.sql",
         "create_table_students.sql",
         "create_table_disciplies.sql",
-        "create_table_teachers.sql"
+        "create_table_teachers.sql",
+        "create_table_grade.sql"
     ]
     try:
         with create_connection() as conn:
@@ -29,7 +30,7 @@ def create_tables():
                         # logger.info(f"{sql_script=}")
                     except OSError as e:
                         logger.error(f"ERROR OPEN SQL : {e}")
-                        break
+                        raise RuntimeError
                     else:
                         if sql_script:
                             if not executescript(conn, sql_script):
