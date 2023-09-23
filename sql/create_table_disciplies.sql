@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS [groups]; 
-CREATE TABLE [groups] (
+DROP TABLE IF EXISTS disciplines; 
+CREATE TABLE disciplines (
      id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
      name STRING UNIQUE
 );
