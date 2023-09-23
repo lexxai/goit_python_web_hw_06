@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS [groups]; 
+CREATE TABLE [groups] (
+     id INTEGER PRIMARY KEY AUTOINCREMENT,
+     name VARCHAR(50)
+);
