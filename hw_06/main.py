@@ -1,5 +1,6 @@
 import logging
 from pathlib import Path
+from pprint import pprint
 from faker import Faker
 
 try:
@@ -16,7 +17,9 @@ except ImportError:
 def main():
     if create_tables():
         seeds()
-        get_statitics()
+        results = get_statitics()
+        for result in results:
+            pprint(results)
 
     
 

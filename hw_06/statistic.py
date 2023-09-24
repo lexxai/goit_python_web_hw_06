@@ -10,6 +10,7 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 
+
 def get_task_01(cur: Cursor) -> list[int]:
     sql = """
     SELECT s.fullname, ROUND(AVG(grade),2) as AVG
@@ -22,19 +23,28 @@ def get_task_01(cur: Cursor) -> list[int]:
     try:
         cur.execute(sql)
         res = cur.fetchall()
-        #res =  [v[:] for v in cur.fetchall()]
-        return f"Studnts: {res}"
+        # res =  [v[:] for v in cur.fetchall()]
+        return res
     except Error as e:
         logger.error(e)
 
 
+
+TASKS = {
+    "TASK_01": get_task_01
+}
+
+
 def get_statitics():
     logger.debug("get_tasks")
+    result = []
     try:
         with create_connection() as conn:
             if conn is not None:
                 cur: Cursor = conn.cursor()
-                logger.info(get_task_01(cur))
+                for task, task_fuc in TASKS.items():
+                    result.append((task, task_fuc(cur)))
                 cur.close()
     except RuntimeError as err:
         logger.error(err)
+    return result
