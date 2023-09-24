@@ -12,8 +12,10 @@ logger = logging.getLogger(__name__)
 
 
 
+
 def get_task(cur: Cursor, sql) -> list[int]:
     try:
+        # sql = "SELECT CHARINDEX(' ', 'SQLite substr');"
         cur.execute(sql)
         # res = cur.fetchall()
         res = [ dict(line) for line in [zip([ column[0] for column in cur.description], row) for row in cur.fetchall()] ]
@@ -23,7 +25,17 @@ def get_task(cur: Cursor, sql) -> list[int]:
         logger.error(e)
 
 
+# Define a custom Python function
+def reverse_string(input_str):
+    return input_str[::-1]
 
+# Define a custom Python function
+def reverse_string(input_str: str) -> str:
+    return input_str[::-1]
+
+# Define a custom Python function
+def find_string_char(find_char: str, input_str: str):
+    return input_str.find(find_char)+1
 
 
 def get_statitics():
@@ -33,6 +45,8 @@ def get_statitics():
     try:
         with create_connection() as conn:
             if conn is not None:
+                conn.create_function("REVERSE", 1, reverse_string)
+                conn.create_function("CHARINDEX", 2, find_string_char)                
                 cur: Cursor = conn.cursor()
                 TASKS = query_base_path.glob("query_*.sql")
                 for task in TASKS:
