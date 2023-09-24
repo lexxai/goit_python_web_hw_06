@@ -14,6 +14,14 @@ except ImportError:
     from hw_06.statistic import get_statitics
 
 
+def print_results(results: list):
+    if results:
+        rich.print("[yellow]Result of statistics tasks:[/yellow]")
+        for result in results:
+            rich.print(result)
+    else:
+        rich.print("[red]Result of statistics empty[/red]")
+
 
 def main():
     skip_created_tables = True
@@ -21,8 +29,7 @@ def main():
         if not skip_created_tables:
             seeds()
         results = get_statitics()
-        for result in results:
-            rich.print(result)
+        print_results(results)
 
     
 

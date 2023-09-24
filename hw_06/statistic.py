@@ -15,7 +15,8 @@ logger = logging.getLogger(__name__)
 def get_task(cur: Cursor, sql) -> list[int]:
     try:
         cur.execute(sql)
-        res = cur.fetchall()
+        # res = cur.fetchall()
+        res = [ dict(line) for line in [zip([ column[0] for column in cur.description], row) for row in cur.fetchall()] ]
         # res =  [v[:] for v in cur.fetchall()]
         return res
     except Error as e:
@@ -26,7 +27,7 @@ def get_task(cur: Cursor, sql) -> list[int]:
 
 
 def get_statitics():
-    logger.debug("get_tasks")
+    logger.debug("Get statitics")
     query_base_path = Path("sql")   
     result = []
     try:
@@ -40,6 +41,7 @@ def get_statitics():
                     if query_path.is_file():
                         logger.debug(f"START TASK {task}")
                         result.append((f"TASK {task.stem}:", get_task(cur, query_path.read_text())))
+                logger.debug(f"ALL TASKS FINISHED")
                 cur.close()
     except RuntimeError as err:
         logger.error(err)
