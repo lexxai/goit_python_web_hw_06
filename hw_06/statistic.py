@@ -37,11 +37,13 @@ def get_statitics():
         with create_connection() as conn:
             if conn is not None:
                 cur: Cursor = conn.cursor()
+                TASKS = query_base_path.glob("query_*.sql")
                 for task in TASKS:
-                    query_path = query_base_path.joinpath(f"query_{task}.sql")
+                    # query_path = query_base_path.joinpath(f"query_{task}.sql")
+                    query_path = task
                     if query_path.is_file():
                         logger.debug(f"START TASK {task}")
-                        result.append((f"TASK {task}:", get_task(cur, query_path.read_text())))
+                        result.append((f"TASK {task.stem}:", get_task(cur, query_path.read_text())))
                 cur.close()
     except RuntimeError as err:
         logger.error(err)
