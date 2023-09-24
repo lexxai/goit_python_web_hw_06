@@ -28,10 +28,29 @@ def get_task_01(cur: Cursor) -> list[int]:
     except Error as e:
         logger.error(e)
 
+def get_task_02(cur: Cursor) -> list[int]:
+    sql = """
+    SELECT s.fullname, ROUND(AVG(grade),2) as AVG
+    FROM grade g
+    LEFT JOIN students s ON s.id = g.students_id 
+    GROUP BY s.id
+    ORDER BY AVG DESC
+    LIMIT 15
+    """
+    try:
+        cur.execute(sql)
+        res = cur.fetchall()
+        # res =  [v[:] for v in cur.fetchall()]
+        return res
+    except Error as e:
+        logger.error(e)
+
+
 
 
 TASKS = {
-    "TASK_01": get_task_01
+    "TASK_01": get_task_01,
+    "TASK_02": get_task_02
 }
 
 
@@ -43,6 +62,8 @@ def get_statitics():
             if conn is not None:
                 cur: Cursor = conn.cursor()
                 for task, task_fuc in TASKS.items():
+                    cur: Cursor = conn.cursor()
+                    logger.debug(f"START TASK {task}")
                     result.append((task, task_fuc(cur)))
                 cur.close()
     except RuntimeError as err:

@@ -19,7 +19,7 @@ def main():
         seeds()
         results = get_statitics()
         for result in results:
-            pprint(results)
+            pprint(result)
 
     
 
