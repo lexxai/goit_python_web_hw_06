@@ -16,8 +16,10 @@ except ImportError:
 
 
 def main():
-    if create_tables():
-        seeds()
+    skip_created_tables = True
+    if create_tables(skip_created_tables):
+        if not skip_created_tables:
+            seeds()
         results = get_statitics()
         for result in results:
             rich.print(result)

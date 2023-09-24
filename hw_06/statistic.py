@@ -25,10 +25,6 @@ def get_task(cur: Cursor, sql) -> list[int]:
 
 
 
-
-TASKS = ["01", "02"]
-
-
 def get_statitics():
     logger.debug("get_tasks")
     query_base_path = Path("sql")   
