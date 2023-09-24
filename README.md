@@ -203,3 +203,141 @@ id  |disciplines_id|discipline          |students_id|student           |group_id
  424|             7|Databases SQL, noSQL|         76|Михайлина Бевзенко|       4|M89-2/8|2023-04-24|   53|
  425|             7|Databases SQL, noSQL|         14|   Теодор Товстуха|       4|M89-2/8|2023-04-24|   45|
 ```
+
+### DOCKER 
+#### BUILD
+scripts\docker_build_image.cmd
+#### RUN
+scripts\docker_run.cmd
+#### USE DOCKER HUB
+docker pull lexxai/web_hw_06:latest
+#### LOAD FORM HUB
+scripts\docker_load.cmd
+
+###  STATISTIC TASKS
+```
+docker_run.cmd
+2023-09-25 00:56:21,163  create_tables
+2023-09-25 00:56:21,166  All 5 tables created
+2023-09-25 00:56:21,167  Get statitics
+2023-09-25 00:56:21,168  START TASK sql\query_01.sql
+2023-09-25 00:56:21,170  START TASK sql\query_02.sql
+2023-09-25 00:56:21,170  START TASK sql\query_03.sql
+2023-09-25 00:56:21,170  START TASK sql\query_04.sql
+2023-09-25 00:56:21,170  START TASK sql\query_05.sql
+2023-09-25 00:56:21,170  START TASK sql\query_06.sql
+2023-09-25 00:56:21,170  START TASK sql\query_07.sql
+2023-09-25 00:56:21,170  START TASK sql\query_08.sql
+2023-09-25 00:56:21,170  START TASK sql\query_09.sql
+2023-09-25 00:56:21,185  START TASK sql\query_10.sql
+2023-09-25 00:56:21,185  START TASK sql\query_11.sql
+2023-09-25 00:56:21,185  START TASK sql\query_12.sql
+2023-09-25 00:56:21,185  ALL TASKS FINISHED
+Result of statistics tasks:
+(
+    'TASK query_01:',
+    [
+        {'student': 'Ліза Височан', 'average_grade': 84.5},
+        {'student': 'Ліза Матяш', 'average_grade': 77.35},
+        {'student': 'Кирило Іваничук', 'average_grade': 76.69},
+        {'student': 'Ярина Габелко', 'average_grade': 74.48},
+        {'student': 'Клавдія Рябошапка', 'average_grade': 74.3}
+    ]
+)
+('TASK query_02:', [{'discipline': 'Python Web', 'student': 'Еріка Юрченко', 'average_garde': 100.0}])
+(
+    'TASK query_03:',
+    [
+        {'discipline': 'Python Web', 'group': 'C88-2/8', 'average_garde': 69.14},
+        {'discipline': 'Python Web', 'group': 'P88-2/8', 'average_garde': 69.07},
+        {'discipline': 'Python Web', 'group': 'M88-1/8', 'average_garde': 68.87},
+        {'discipline': 'Python Web', 'group': 'M89-2/8', 'average_garde': 68.0},
+        {'discipline': 'Python Web', 'group': 'P89-1/8', 'average_garde': 67.93},
+        {'discipline': 'Python Web', 'group': 'P89-2/8', 'average_garde': 67.81},
+        {'discipline': 'Python Web', 'group': 'M89-1/8', 'average_garde': 67.43},
+        {'discipline': 'Python Web', 'group': 'P88-1/8', 'average_garde': 64.95},
+        {'discipline': 'Python Web', 'group': 'C89-2/8', 'average_garde': 64.02},
+        {'discipline': 'Python Web', 'group': 'M88-2/8', 'average_garde': 64.0},
+        {'discipline': 'Python Web', 'group': 'C88-1/8', 'average_garde': 63.95},
+        {'discipline': 'Python Web', 'group': 'C89-1/8', 'average_garde': 61.68}
+    ]
+)
+('TASK query_04:', [{'average_garde': 65.23}])
+('TASK query_05:', [{'teacher': 'Левко Носенко', 'discipline': 'Python Data Science'}, {'teacher': 'Левко Носенко', 'discipline': 'Soft Skils'}])
+(
+    'TASK query_06:',
+    [
+        {'group': 'M88-1/8', 'student': 'Василина Асаула', 'last_name': 'Асаула'},
+        {'group': 'M88-1/8', 'student': 'Ада Гаєвський', 'last_name': 'Гаєвський'},
+        {'group': 'M88-1/8', 'student': 'Ростислав Гоголь', 'last_name': 'Гоголь'},
+        {'group': 'M88-1/8', 'student': 'Ольга Даниленко', 'last_name': 'Даниленко'},
+        {'group': 'M88-1/8', 'student': 'Ірена Карпа', 'last_name': 'Карпа'},
+        {'group': 'M88-1/8', 'student': 'Олена Лубенець', 'last_name': 'Лубенець'},
+        {'group': 'M88-1/8', 'student': 'Віра Масоха', 'last_name': 'Масоха'},
+        {'group': 'M88-1/8', 'student': 'Клавдія Цимбалюк', 'last_name': 'Цимбалюк'},
+        {'group': 'M88-1/8', 'student': 'Азар Чаленко', 'last_name': 'Чаленко'},
+        {'group': 'M88-1/8', 'student': 'Василина Черінько', 'last_name': 'Черінько'},
+        {'group': 'M88-1/8', 'student': 'Христина Ґалаґан', 'last_name': 'Ґалаґан'}
+    ]
+)
+(
+    'TASK query_07:',
+    [
+        {'student': 'Василина Черінько', 'discipline': 'Python Core', 'group': 'M88-1/8', 'grade': 100},
+        {'student': 'Ольга Даниленко', 'discipline': 'Python Core', 'group': 'M88-1/8', 'grade': 98},
+        {'student': 'Олена Лубенець', 'discipline': 'Python Core', 'group': 'M88-1/8', 'grade': 92},
+        {'student': 'Христина Ґалаґан', 'discipline': 'Python Core', 'group': 'M88-1/8', 'grade': 84},
+        {'student': 'Клавдія Цимбалюк', 'discipline': 'Python Core', 'group': 'M88-1/8', 'grade': 77},
+        {'student': 'Ада Гаєвський', 'discipline': 'Python Core', 'group': 'M88-1/8', 'grade': 75},
+        {'student': 'Ростислав Гоголь', 'discipline': 'Python Core', 'group': 'M88-1/8', 'grade': 66},
+        {'student': 'Віра Масоха', 'discipline': 'Python Core', 'group': 'M88-1/8', 'grade': 49},
+        {'student': 'Ірена Карпа', 'discipline': 'Python Core', 'group': 'M88-1/8', 'grade': 43},
+        {'student': 'Василина Асаула', 'discipline': 'Python Core', 'group': 'M88-1/8', 'grade': 30}
+    ]
+)
+(
+    'TASK query_08:',
+    [
+        {'teacher': 'Левко Носенко', 'discipline': 'Python Data Science', 'average_garde': 64.63},
+        {'teacher': 'Левко Носенко', 'discipline': 'Soft Skils', 'average_garde': 63.32}
+    ]
+)
+(
+    'TASK query_09:',
+    [
+        {'student': 'Вадим Шовкопляс', 'discipline': 'Databases SQL, noSQL'},
+        {'student': 'Вадим Шовкопляс', 'discipline': 'English'},
+        {'student': 'Вадим Шовкопляс', 'discipline': 'HTML CSS'},
+        {'student': 'Вадим Шовкопляс', 'discipline': 'Python Core'},
+        {'student': 'Вадим Шовкопляс', 'discipline': 'Python Data Science'},
+        {'student': 'Вадим Шовкопляс', 'discipline': 'Python Web'},
+        {'student': 'Вадим Шовкопляс', 'discipline': 'Soft Skils'},
+        {'student': 'Вадим Шовкопляс', 'discipline': 'Історія України'},
+        {'student': 'Вадим Шовкопляс', 'discipline': 'Вища математика'},
+        {'student': 'Вадим Шовкопляс', 'discipline': 'Філософія'}
+    ]
+)
+(
+    'TASK query_10:',
+    [
+        {'discipline': 'Python Data Science', 'student': 'Вадим Шовкопляс', 'teacher': 'Левко Носенко'},
+        {'discipline': 'Soft Skils', 'student': 'Вадим Шовкопляс', 'teacher': 'Левко Носенко'}
+    ]
+)
+(
+    'TASK query_11:',
+    [
+        {'discipline': 'Soft Skils', 'student': 'Вадим Шовкопляс', 'teacher': 'Левко Носенко', 'average_garde': 80.0},
+        {'discipline': 'Python Data Science', 'student': 'Вадим Шовкопляс', 'teacher': 'Левко Носенко', 'average_garde': 65.5}
+    ]
+)
+(
+    'TASK query_12:',
+    [
+        {'group': 'M89-1/8', 'discipline': 'Python Core', 'student': 'Омелян Пелех', 'teacher': 'Тереза Редько', 'grade': 92, 'date_of': '2023-09-13'},
+        {'group': 'M89-1/8', 'discipline': 'Python Core', 'student': 'Мирослав Мазур', 'teacher': 'Тереза Редько', 'grade': 55, 'date_of': '2023-09-13'},       
+        {'group': 'M89-1/8', 'discipline': 'Python Core', 'student': 'Павло Заєць', 'teacher': 'Тереза Редько', 'grade': 30, 'date_of': '2023-09-13'}
+    ]
+)
+
+```

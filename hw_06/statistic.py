@@ -48,7 +48,7 @@ def get_statitics():
                 conn.create_function("REVERSE", 1, reverse_string)
                 conn.create_function("CHARINDEX", 2, find_string_char)                
                 cur: Cursor = conn.cursor()
-                TASKS = query_base_path.glob("query_*.sql")
+                TASKS = sorted(query_base_path.glob("query_*.sql"))
                 for task in TASKS:
                     # query_path = query_base_path.joinpath(f"query_{task}.sql")
                     query_path = task
