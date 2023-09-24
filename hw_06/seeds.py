@@ -2,7 +2,7 @@ import logging
 from faker import Faker
 from datetime import datetime, date, timedelta
 from random import randint, sample
-from sqlite3 import Cursor, ProgrammingError, Error
+from sqlite3 import Cursor, Error
 
 try:
     from connection import create_connection
@@ -60,7 +60,7 @@ def seed_disciplines(cur: Cursor):
                 iter([randint(1, TOTAL_TEACHERS) for _ in range(len(disciplines))]),
             ),
         )
-    except ProgrammingError as e:
+    except Error as e:
         logger.error(e)
 
 
@@ -73,13 +73,13 @@ def seed_groups(cur: Cursor):
                 groups,
             ),
         )
-    except ProgrammingError as e:
+    except Error as e:
         logger.error(e)
 
 
 def seed_teacher(cur: Cursor):
     teachers = [
-        fake.name().replace("пані", "").replace("пан", "")
+        fake.name().replace("пані", "").replace("пан", "").strip()
         for _ in range(TOTAL_TEACHERS)
     ]
     sql = "INSERT INTO teachers(fullname) VALUES (?);"
@@ -90,13 +90,13 @@ def seed_teacher(cur: Cursor):
                 teachers,
             ),
         )
-    except ProgrammingError as e:
+    except Error as e:
         logger.error(e)
 
 
 def seed_students(cur: Cursor):
     students = [
-        fake.name().replace("пані", "").replace("пан", "")
+        fake.name().replace("пані", "").replace("пан", "").strip()
         for _ in range(TOTAL_STUDENTS)
     ]
     sql = "INSERT INTO students(fullname, group_id) VALUES (?,?);"
@@ -108,7 +108,7 @@ def seed_students(cur: Cursor):
                 students, iter([randint(1, len(groups)) for _ in range(TOTAL_STUDENTS)])
             ),
         )
-    except ProgrammingError as e:
+    except Error as e:
         logger.error(e)
 
 
