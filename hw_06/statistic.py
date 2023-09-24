@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 from sqlite3 import Cursor, Error
 
 try:
@@ -11,32 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 
-def get_task_01(cur: Cursor) -> list[int]:
-    sql = """
-    SELECT s.fullname, ROUND(AVG(grade),2) as AVG
-    FROM grade g
-    LEFT JOIN students s ON s.id = g.students_id 
-    GROUP BY s.id
-    ORDER BY AVG DESC
-    LIMIT 5
-    """
-    try:
-        cur.execute(sql)
-        res = cur.fetchall()
-        # res =  [v[:] for v in cur.fetchall()]
-        return res
-    except Error as e:
-        logger.error(e)
-
-def get_task_02(cur: Cursor) -> list[int]:
-    sql = """
-    SELECT s.fullname, ROUND(AVG(grade),2) as AVG
-    FROM grade g
-    LEFT JOIN students s ON s.id = g.students_id 
-    GROUP BY s.id
-    ORDER BY AVG DESC
-    LIMIT 15
-    """
+def get_task(cur: Cursor, sql) -> list[int]:
     try:
         cur.execute(sql)
         res = cur.fetchall()
@@ -48,23 +24,24 @@ def get_task_02(cur: Cursor) -> list[int]:
 
 
 
-TASKS = {
-    "TASK_01": get_task_01,
-    "TASK_02": get_task_02
-}
+
+
+TASKS = ["01", "02"]
 
 
 def get_statitics():
     logger.debug("get_tasks")
+    query_base_path = Path("sql")   
     result = []
     try:
         with create_connection() as conn:
             if conn is not None:
                 cur: Cursor = conn.cursor()
-                for task, task_fuc in TASKS.items():
-                    cur: Cursor = conn.cursor()
-                    logger.debug(f"START TASK {task}")
-                    result.append((task, task_fuc(cur)))
+                for task in TASKS:
+                    query_path = query_base_path.joinpath(f"query_{task}.sql")
+                    if query_path.is_file():
+                        logger.debug(f"START TASK {task}")
+                        result.append((f"TASK {task}:", get_task(cur, query_path.read_text())))
                 cur.close()
     except RuntimeError as err:
         logger.error(err)
