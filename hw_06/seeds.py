@@ -116,7 +116,7 @@ def get_group_students(cur: Cursor, group_id) -> list[int]:
     sql = "SELECT id FROM students WHERE group_id = ?;"
     try:
         cur.execute(sql, (group_id,))
-        return [ v[0] for v in cur.fetchall() ]
+        return [v[0] for v in cur.fetchall()]
     except Error as e:
         logger.error(e)
 
@@ -140,7 +140,6 @@ def seed_grade(cur: Cursor):
         random_group = randint(1, len(groups))
         # random_students = [randint(1, TOTAL_STUDENTS) for _ in range(randint(3, 12))]
         group_students = get_group_students(cur, random_group)
-        print(random_group, group_students)
         max_random_students_in_group = min(12, len(group_students))
         min_random_students_in_group = min(3, len(group_students))
         random_students = sample(
