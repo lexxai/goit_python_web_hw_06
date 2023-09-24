@@ -5,15 +5,18 @@ from faker import Faker
 try:
     from create_tables import create_tables
     from seeds import seeds
+    from statistic import get_statitics
 except ImportError:
     from hw_06.create_tables import create_tables
     from hw_06.seeds import seeds
+    from hw_06.statistic import get_statitics
 
 
 
 def main():
     if create_tables():
         seeds()
+        get_statitics()
 
     
 
