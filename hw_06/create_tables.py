@@ -17,7 +17,6 @@ def sql_skip_created(sql: str, skip_created: bool = False) -> str:
         return sql
     sql = sql.replace("DROP TABLE", "--DROP TABLE")
     sql = sql.replace("CREATE TABLE", "CREATE TABLE IF NOT EXISTS")
-    print(f"{sql=}")
     return sql
 
 
