@@ -1,7 +1,7 @@
 import logging
 from faker import Faker
 from datetime import datetime, date, timedelta
-from random import randint
+from random import randint, sample
 from sqlite3 import Cursor, ProgrammingError, Error
 
 try:
@@ -112,6 +112,15 @@ def seed_students(cur: Cursor):
         logger.error(e)
 
 
+def get_group_students(cur: Cursor, group_id) -> list[int]:
+    sql = "SELECT id FROM students WHERE group_id = ?;"
+    try:
+        cur.execute(sql, (group_id,))
+        return [ v[0] for v in cur.fetchall() ]
+    except Error as e:
+        logger.error(e)
+
+
 def seed_grade(cur: Cursor):
     satrt_date = datetime.strptime("2023-04-21", "%Y-%m-%d")
     end_date = datetime.strptime("2024-02-20", "%Y-%m-%d")
@@ -128,7 +137,17 @@ def seed_grade(cur: Cursor):
     sql = "INSERT INTO grade(grade, disciplines_id, students_id, date_of) VALUES (?, ?, ?, ?);"
     for _ in range(TOTAL_GRADES):
         random_discipline = randint(1, len(disciplines))
-        random_students = [randint(1, TOTAL_STUDENTS) for _ in range(randint(3, 12))]
+        random_group = randint(1, len(groups))
+        # random_students = [randint(1, TOTAL_STUDENTS) for _ in range(randint(3, 12))]
+        group_students = get_group_students(cur, random_group)
+        print(random_group, group_students)
+        max_random_students_in_group = min(12, len(group_students))
+        min_random_students_in_group = min(3, len(group_students))
+        random_students = sample(
+            group_students,
+            randint(min_random_students_in_group, max_random_students_in_group),
+        )
+        # random_students = []
         random_date_of = get_day()
         for random_student in random_students:
             random_grade = randint(30, 100)
@@ -147,9 +166,9 @@ def seeds():
         with create_connection() as conn:
             if conn is not None:
                 cur: Cursor = conn.cursor()
+                seed_teacher(cur)
                 seed_disciplines(cur)
                 seed_groups(cur)
-                seed_teacher(cur)
                 seed_students(cur)
                 seed_grade(cur)
                 cur.close()
