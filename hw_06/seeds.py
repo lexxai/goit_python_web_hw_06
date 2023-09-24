@@ -50,15 +50,15 @@ fake: Faker = Faker("uk-UA")
 
 
 def seed_disciplines(cur: sqlite3.Cursor):
-    sql = 'INSERT INTO disciplines(name) VALUES (?);'
+    sql = 'INSERT INTO disciplines(name, teachers_id) VALUES (?,?);'
     try:
-        cur.executemany(sql, zip(disciplines,))
+        cur.executemany(sql, zip(disciplines, [ randint(1,TOTAL_TEACHERS)  for _ in range(TOTAL_TEACHERS)] ))
     except sqlite3.ProgrammingError as e:
         logger.error(e)
 
 
 def seed_groups(cur: sqlite3.Cursor):
-    sql = 'INSERT INTO [groups](name) VALUES (?);'
+    sql = 'INSERT INTO groups(name) VALUES (?);'
     try:
         cur.executemany(sql, zip(groups,))
     except sqlite3.ProgrammingError as e:
@@ -75,9 +75,17 @@ def seed_teacher(cur: sqlite3.Cursor):
 
 def seed_students(cur: sqlite3.Cursor):
     students = [fake.name().replace("пані","").replace("пан","") for _ in range(TOTAL_STUDENDS)]
-    sql = 'INSERT INTO students(fullname) VALUES (?);'
+    sql = 'INSERT INTO disciplines(name, teachers_id) VALUES (?,?);'
+
     try:
-        cur.executemany(sql, zip(students,))
+        cur.executemany(sql, zip(students, [ randint(1,len(groups))  for _ in groups] ))
+    except sqlite3.ProgrammingError as e:
+        logger.error(e)
+
+def seed_disciplines(cur: sqlite3.Cursor):
+    sql = 'INSERT INTO disciplines(name, teachers_id) VALUES (?,?);'
+    try:
+        cur.executemany(sql, zip(disciplines, [ randint(1,TOTAL_TEACHERS)  for _ in range(TOTAL_TEACHERS)] ))
     except sqlite3.ProgrammingError as e:
         logger.error(e)
 
