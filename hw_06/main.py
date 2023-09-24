@@ -2,6 +2,7 @@ import logging
 from pathlib import Path
 from pprint import pprint
 from faker import Faker
+import rich
 
 try:
     from create_tables import create_tables
@@ -19,7 +20,7 @@ def main():
         seeds()
         results = get_statitics()
         for result in results:
-            pprint(result)
+            rich.print(result)
 
     
 
