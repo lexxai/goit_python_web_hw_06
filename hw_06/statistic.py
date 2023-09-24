@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 def get_task_01(cur: Cursor) -> list[int]:
     sql = """
-    SELECT s.fullname, AVG(grade) as AVG
+    SELECT s.fullname, ROUND(AVG(grade),2) as AVG
     FROM grade g
     LEFT JOIN students s ON s.id = g.students_id 
     GROUP BY s.id
@@ -21,7 +21,8 @@ def get_task_01(cur: Cursor) -> list[int]:
     """
     try:
         cur.execute(sql)
-        res =  [v[:] for v in cur.fetchall()]
+        res = cur.fetchall()
+        #res =  [v[:] for v in cur.fetchall()]
         return f"Studnts: {res}"
     except Error as e:
         logger.error(e)
