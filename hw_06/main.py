@@ -4,16 +4,16 @@ from faker import Faker
 
 try:
     from create_tables import create_tables
-    from insert_data import insert_data
+    from seeds import seeds
 except ImportError:
     from hw_06.create_tables import create_tables
-    from hw_06.insert_data import insert_data
+    from hw_06.seeds import seeds
 
 
 
 def main():
     if create_tables():
-        insert_data()
+        seeds()
 
     
 
